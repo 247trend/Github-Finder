@@ -1,7 +1,7 @@
 import { useContext } from "react"
-import "../styles/loader.css"
 import UserItem from "./UserItem"
 import GithubContext from "../../context/github/GithubContext"
+import Loader from "../layout/Loader"
 
 const UserResults = () => {
   const { users, loading } = useContext(GithubContext)
@@ -15,12 +15,7 @@ const UserResults = () => {
       </div>
     )
   } else {
-    return (
-      <div className="text-center mx-auto">
-        <span className="loader text-center mx-auto"></span>
-        <h3>Loading ...</h3>
-      </div>
-    )
+    return <Loader />
   }
 }
 
