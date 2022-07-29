@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import "../styles/loader.css"
+import UserItem from "./UserItem"
 
 const UserResults = () => {
   const [users, setUsers] = useState([])
@@ -23,16 +24,16 @@ const UserResults = () => {
 
   if (!loading) {
     return (
-      <div className="grid grid-cols-1 gap-8 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-8 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 mb-10">
         {users.map((user) => (
-          <h3>{user.login}</h3>
+          <UserItem key={user.id} user={user} />
         ))}
       </div>
     )
   } else {
     return (
       <div className="text-center mx-auto">
-        <span class="loader text-center mx-auto"></span>
+        <span className="loader text-center mx-auto"></span>
         <h3>Loading ...</h3>
       </div>
     )
