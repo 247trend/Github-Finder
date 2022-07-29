@@ -1,10 +1,13 @@
 import { useState, useContext } from "react"
 import GithubContext from "../../context/github/GithubContext"
+import AlertContext from "../../context/alert/AlertContext"
 
 const UserSearch = () => {
   const [text, setText] = useState("")
 
   const { users, searchUsers, clearUsers } = useContext(GithubContext)
+
+  const { setAlert } = useContext(AlertContext)
 
   const handleChange = (e) => {
     setText(e.target.value)
@@ -14,7 +17,7 @@ const UserSearch = () => {
     e.preventDefault()
 
     if (text === "") {
-      alert("Please enter in search bar")
+      setAlert("Search input cannot be empty.", "error")
     } else {
       searchUsers(text)
       setText("")
@@ -27,15 +30,17 @@ const UserSearch = () => {
         <form onSubmit={handleSubmit}>
           <div className="form-control">
             <div className="relative">
-              <input onChange={handleChange} type="text" className="w-full pr-40 bg-gray-200 input input-lg text-black" placeholder="Search" value={text} />
-              <button className="absolute top-0 right-0 rounded-l-none w-36 btn btn-lg">GO</button>
+              <input onChange={handleChange} type="text" className="w-full pr-40 bg-gray-200 input input-lg text-black mt-2" placeholder="Search" value={text} />
+              <button className="absolute top-0 right-0 rounded-l-none w-36 btn btn-lg mt-2">GO</button>
             </div>
           </div>
         </form>
       </div>
       {users.length > 0 && (
         <div>
-          <button onClick={clearUsers} className="btn btn-ghost btn-lg">Clear</button>
+          <button onClick={clearUsers} className="btn btn-ghost btn-lg">
+            Clear
+          </button>
         </div>
       )}
     </div>
