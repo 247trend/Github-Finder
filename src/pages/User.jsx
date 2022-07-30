@@ -5,16 +5,25 @@ import { FaCodepen, FaStore, FaUserFriends, FaUsers } from "react-icons/fa"
 import { Link } from "react-router-dom"
 import Loader from "../components/layout/Loader"
 import RepoList from "../components/repos/RepoList"
+import { getUser, getUserRepos } from "../context/github/GithubActions"
 
 const User = () => {
-  const { user, getUser, loading, repos, getUserRepos } = useContext(GithubContext)
+  const { user, loading, repos, dispatch } = useContext(GithubContext)
 
   const params = useParams()
 
   useEffect(() => {
-    getUser(params.login)
-    getUserRepos(params.login)
-  }, [])
+    dispatch({type: "SET_LOADING"})
+    const getUserData = async () => {
+      const userData = await getUser(params.login)
+      dispatch({type: "GET_USER", payload: userData})
+
+      const userRepoData = await getUserRepos(params.login)
+      dispatch({type: "GET_REPOS", payload: userRepoData})
+    }
+
+    getUserData()
+  }, [dispatch, params.login])
 
   const { login, name, type, avatar_url, location, hireable, public_repos, public_gists, followers, html_url, following, blog, twitter_username, created_at } = user
 
@@ -97,7 +106,9 @@ const User = () => {
                 </code>
               </pre>
             )}
-            <a className="btn btn-outline ml-5 mt-5" href={html_url} target="_blank" rel="noreferrer">Visit Github Page</a>
+            <a className="btn btn-outline ml-5 mt-5" href={html_url} target="_blank" rel="noreferrer">
+              Visit Github Page
+            </a>
           </div>
         </div>
 
@@ -135,7 +146,7 @@ const User = () => {
           </div>
         </div>
 
-        <RepoList repos={repos}/>  
+        <RepoList repos={repos} />
       </div>
     </>
   )
