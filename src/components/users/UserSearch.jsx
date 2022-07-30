@@ -31,6 +31,7 @@ const UserSearch = () => {
           <div className="form-control">
             <div className="relative">
               <input onChange={handleChange} type="text" className="w-full pr-40 bg-gray-200 input input-lg text-black mt-2" placeholder="Search" value={text} />
+              <p className="text-xs ml-1 mt-1">Please search via username or part of it</p>
               <button className="absolute top-0 right-0 rounded-l-none w-36 btn btn-lg mt-2">GO</button>
             </div>
           </div>
