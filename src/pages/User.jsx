@@ -13,9 +13,10 @@ const User = () => {
 
   useEffect(() => {
     getUser(params.login)
+    getUserRepos(params.login)
   }, [])
 
-  const { login, name, type, avatar_url, location, bio, hireable, public_repos, public_gists, followers, html_url, following, blog, twitter_username, created_at } = user
+  const { login, name, type, avatar_url, location, hireable, public_repos, public_gists, followers, html_url, following, blog, twitter_username, created_at } = user
 
   if (loading) {
     return <Loader />
@@ -42,7 +43,7 @@ const User = () => {
             </div>
           </div>
 
-          <div className="mockup-code w-fit">
+          <div className="mockup-code w-fit mx-auto">
             <pre data-prefix="$">
               <code>
                 git init <span className="text-success">{login}</span>
@@ -96,6 +97,7 @@ const User = () => {
                 </code>
               </pre>
             )}
+            <a className="btn btn-outline ml-5 mt-5" href={html_url} target="_blank" rel="noreferrer">Visit Github Page</a>
           </div>
         </div>
 
@@ -133,7 +135,7 @@ const User = () => {
           </div>
         </div>
 
-        <RepoList />  
+        <RepoList repos={repos}/>  
       </div>
     </>
   )
